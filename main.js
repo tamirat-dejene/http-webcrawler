@@ -2,8 +2,9 @@
 // Our scripts takes a website as an input and crawl that website
 
 const { crawlPage } = require("./crawl");
+const { printReport } = require("./report");
 
-function main() {
+async function main() {
   // Invalid command line argument
   let l = process.argv.length;
   if (l !== 3) {
@@ -16,7 +17,9 @@ function main() {
 
   const baseURL = process.argv[2];
   console.log(`starting crawl of ${baseURL}`);
-  crawlPage(process.argv[2]);
+  const pages = await crawlPage(baseURL, baseURL, {});
+
+  printReport(pages);
 }
 
 main();
