@@ -1,0 +1,23 @@
+{
+  "name": "http-webcrawler",
+  "version": "1.0.0",
+  "description": "an http webcrawler",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tamirat-dejene/http-webcrawler.git"
+  },
+  "author": "Tamirat Dejene",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tamirat-dejene/http-webcrawler/issues"
+  },
+  "homepage": "https://github.com/tamirat-dejene/http-webcrawler#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
