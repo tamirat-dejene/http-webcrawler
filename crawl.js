@@ -1,10 +1,44 @@
-// When doing test driven development there are kind of three steps:
-/**
- * 1. Stub out the function we wanna test
- * 2. Write the tests for the function
- * 3. To go back and actually implement
- */
 
+
+const { JSDOM } = require('jsdom');
+
+
+/**
+ * Grab all the url embedded within the html page
+ * @param {htmlBody} htmlBody string represnting html file
+ * @param {baseURL} baseURL string representins the url of the website being crawled
+ * @returns array of all the urls in the html page
+ */
+function getURLsFromHTML(htmlBody, baseURL) {
+  const urls = [];
+  const dom = new JSDOM(htmlBody);  // takes html string and creates in memory html tree structure: allows us access dom in node
+  const linkElements = dom.window.document.querySelectorAll('a'); // list of <a> tags
+
+  let urlString;
+
+  for (let linkElement of linkElements) {
+    urlString = linkElement.href;
+
+    if (linkElement.href.slice(0, 1) === '/')
+      urlString = `${baseURL}${linkElement.href}`  // relative
+
+    try {
+      let urlObj = new URL(urlString);
+      urls.push(urlObj.href);
+    } catch (err) {
+      console.log(`Error with the url: ${err.message}`);
+    }
+  }
+
+  return urls;
+}
+
+
+/**
+ * Normalizes the given url string
+ * @param {urlString} urlString any string representing a url
+ * @returns normalized url
+ */
 function normalizeURL(urlString) {
   const urlObj = new URL(urlString);
   // we don't actually want the protocol
@@ -16,4 +50,4 @@ function normalizeURL(urlString) {
   return hostPath;
 }
 
-module.exports = { normalizeURL };
+module.exports = { normalizeURL, getURLsFromHTML };
